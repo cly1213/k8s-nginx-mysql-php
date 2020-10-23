@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-php
+spec:
+  selector:
+    matchLabels:
+      app: nginx-php
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-php
+    spec:
+      containers:
+      - name: nginx-php
+        image: nginx:02
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-data
+          mountPath: /usr/share/nginx/html
+      
+      volumes:
+      - name: nginx-data
+        hostPath:
+         path: /root/k8s/nmp/html
